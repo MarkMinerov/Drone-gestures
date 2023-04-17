@@ -1,0 +1,94 @@
+item {
+  id: 1,
+  name: 'no_gesture'
+}
+
+item {
+  id: 2,
+  name: 'peace_inverted'
+}
+
+item {
+  id: 3,
+  name: 'three2'
+}
+
+item {
+  id: 4,
+  name: 'three'
+}
+
+item {
+  id: 5,
+  name: 'stop'
+}
+
+item {
+  id: 6,
+  name: 'call'
+}
+
+item {
+  id: 7,
+  name: 'dislike'
+}
+
+item {
+  id: 8,
+  name: 'fist'
+}
+
+item {
+  id: 9,
+  name: 'like'
+}
+
+item {
+  id: 10,
+  name: 'two_up'
+}
+
+item {
+  id: 11,
+  name: 'two_up_inverted'
+}
+
+item {
+  id: 12,
+  name: 'four'
+}
+
+item {
+  id: 13,
+  name: 'ok'
+}
+
+item {
+  id: 14,
+  name: 'mute'
+}
+
+item {
+  id: 15,
+  name: 'stop_inverted'
+}
+
+item {
+  id: 16,
+  name: 'one'
+}
+
+item {
+  id: 17,
+  name: 'peace'
+}
+
+item {
+  id: 18,
+  name: 'rock'
+}
+
+item {
+  id: 19,
+  name: 'palm'
+}
