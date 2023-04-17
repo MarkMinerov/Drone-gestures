@@ -89,7 +89,7 @@ def process_request(request):
 
         if pending_command_threshold_max_error > PENDING_THRESHOLD:
             print(f"No problem, I will cancel '{executing_command}'")
-            
+
             executing_command = None
             request_streak = { "name": "", "row": 0 }
             pending_command_threshold_max_error = 0
