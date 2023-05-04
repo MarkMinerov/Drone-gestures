@@ -31,7 +31,12 @@ COMMANDS = {
   'peace': f"left {DISTANCE}",
   'three': f"right {DISTANCE}",
   'stop': f"up {DISTANCE}",
-  'fist': f"down {DISTANCE}"
+  'fist': f"down {DISTANCE}",
+  "two_up": f"cw {DISTANCE}",
+  "ok": f"ccw {DISTANCE}",
+  "call": f"flip l",
+  "one": f"forward {DISTANCE}",
+  "dislike": f"back {DISTANCE}"
 }
 
 def handle_commands(socket_queue, socket):
