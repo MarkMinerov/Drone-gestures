@@ -26,9 +26,3 @@ Thus, you can use next gestures to control the drone:
 - `fist`: `down $DISTANCE`
 
 You may specify value for `$DISTANCE` variable in `proxy.py` script.
-
-## TODO
-
-- Move constants out of script in a configuration file
-- Let developer edit which gesture control what action via input script parameters or a config file
-- Create a new model which will use `700 GB` of data from [this repo](https://github.com/hukenovs/hagrid)

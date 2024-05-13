@@ -10,8 +10,7 @@ from object_detection.utils import config_util
 from object_detection.builders import model_builder
 from object_detection.utils import label_map_util
 
-COMMAND_THRESHOLD = 4
-PENDING_THRESHOLD = 2
+COMMAND_THRESHOLD = 1
 COMMANDS_WSL_ADDRESS = ('0.0.0.0', 8086)
 VIDEO_PROXY_ADDRESS = ('0.0.0.0', 5001)
 BUFFER_SIZE = 4096
@@ -69,7 +68,7 @@ def process_request(request):
     global executing_command, request_streak, pending_command_threshold_max_error
 
     # if no command is provided
-    if executing_command == None and request != 'like':
+    if executing_command == None:
         if request_streak["name"] == request:
             request_streak['row'] += 1
         else:
@@ -77,30 +76,8 @@ def process_request(request):
             request_streak["row"] = 0
 
         if request_streak["row"] >= COMMAND_THRESHOLD:
-            executing_command = request_streak["name"]
-            command_to_execute = 'pending'
-            print(f"Are you sure you want me to execute '{executing_command}' ?")
+            command_to_execute = request_streak["name"]
             request_streak = { "name": "", "row": 0 }
-
-    # if there is a pending command
-    elif executing_command != None and executing_command != request:
-        if request == 'like': request_streak['row'] += 1
-        else: pending_command_threshold_max_error += 1
-
-        if pending_command_threshold_max_error > PENDING_THRESHOLD:
-            print(f"No problem, I will cancel '{executing_command}'")
-
-            executing_command = None
-            request_streak = { "name": "", "row": 0 }
-            pending_command_threshold_max_error = 0
-
-        elif request_streak['row'] >= COMMAND_THRESHOLD:
-            print(f"Okay, executing {executing_command}!")
-            command_to_execute = executing_command
-
-            executing_command = None
-            request_streak = { "name": "", "row": 0 }
-            pending_command_threshold_max_error = 0
 
     return command_to_execute
 
@@ -150,11 +127,12 @@ try:
 
             input_tensor = tf.convert_to_tensor(np.expand_dims(image_np, 0), dtype=tf.float32)
             detections, predictions_dict, shapes = detect_fn(input_tensor)
-            
+
             best_detection_index = detections['detection_scores'][0].numpy().argmax()
             detections_class = (detections['detection_classes'][0].numpy() + label_id_offset).astype(int)[best_detection_index]
 
             if detections['detection_scores'][0].numpy().max() > .5:
+                print(category_index[detections_class]['name'])
                 command_to_execute = process_request(category_index[detections_class]['name'])
 
                 if command_to_execute:
