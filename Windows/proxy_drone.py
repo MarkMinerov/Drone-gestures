@@ -4,8 +4,12 @@ import cv2
 import threading
 import queue
 import winsound
+import subprocess
 
-WSL_IP = '192.168.69.132'
+WSL_IP = subprocess.check_output(["wsl", "hostname", "-I"])
+WSL_IP = WSL_IP.decode('utf-8').strip()
+
+# WSL_IP = '192.168.69.132'
 
 # Create a UDP socket
 proxy_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
