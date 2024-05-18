@@ -4,9 +4,12 @@ import cv2
 import threading
 import queue
 import subprocess
+import json
 
 WSL_IP = subprocess.check_output(["wsl", "hostname", "-I"])
 WSL_IP = WSL_IP.decode('utf-8').strip()
+
+f = open('configs/simulation_gestures.json')
 
 # WSL_IP = '192.168.69.132'
 
@@ -25,20 +28,16 @@ capture = None
 TCP_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 TCP_socket.connect(COMMANDS_WSL_ADDRESS)
 
-DS = {
-    "palm": "takeoff",
-    "rock": "land",
-    'peace': "left",
-    "like": "forward",
-    "dislike": "back"
-    # 'three': "right {DISTANCE}",
-    # 'stop': "up {DISTANCE}",
-    # 'fist': "down {DISTANCE}",
-    # "two_up": "cw {DISTANCE}",
-    # "ok": "ccw {DISTANCE}",
-    # "call": "flip l",
+DS = json.load(f)
 
-}
+# DS = {
+#     "palm": "takeoff",
+#     "rock": "land",
+#     'peace': "left",
+#     'three': "right",
+#     "like": "forward",
+#     "dislike": "back"
+# }
 
 
 def handle_commands(socket_queue, socket):
@@ -102,6 +101,8 @@ def main():
 
         except queue.Empty:
             pass
+
+    f.close()
 
 
 main()

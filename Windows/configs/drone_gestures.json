@@ -1,0 +1,13 @@
+{
+  "palm": "takeoff",
+  "rock": "land",
+  "peace": "left 30",
+  "three": "right 30",
+  "stop": "up 30",
+  "fist": "down 30",
+  "two_up": "cw 30",
+  "ok": "ccw 30",
+  "call": "flip l",
+  "one": "forward 30",
+  "dislike": "back 30"
+}

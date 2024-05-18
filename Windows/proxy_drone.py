@@ -5,11 +5,14 @@ import threading
 import queue
 import winsound
 import subprocess
+import json
 
 WSL_IP = subprocess.check_output(["wsl", "hostname", "-I"])
 WSL_IP = WSL_IP.decode('utf-8').strip()
 
 # WSL_IP = '192.168.69.132'
+
+f = open('configs/drone_gestures.json')
 
 # Create a UDP socket
 proxy_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -29,19 +32,21 @@ TCP_socket.connect(COMMANDS_WSL_ADDRESS)
 
 DISTANCE = 30
 
-COMMANDS = {
-  "palm": "takeoff",
-  "rock": "land",
-  'peace': f"left {DISTANCE}",
-  'three': f"right {DISTANCE}",
-  'stop': f"up {DISTANCE}",
-  'fist': f"down {DISTANCE}",
-  "two_up": f"cw {DISTANCE}",
-  "ok": f"ccw {DISTANCE}",
-  "call": f"flip l",
-  "one": f"forward {DISTANCE}",
-  "dislike": f"back {DISTANCE}"
-}
+COMMANDS = json.load(f)
+
+# COMMANDS = {
+#   "palm": "takeoff",
+#   "rock": "land",
+#   'peace': f"left {DISTANCE}",
+#   'three': f"right {DISTANCE}",
+#   'stop': f"up {DISTANCE}",
+#   'fist': f"down {DISTANCE}",
+#   "two_up": f"cw {DISTANCE}",
+#   "ok": f"ccw {DISTANCE}",
+#   "call": f"flip l",
+#   "one": f"forward {DISTANCE}",
+#   "dislike": f"back {DISTANCE}"
+# }
 
 def handle_commands(socket_queue, socket):
   while True:
@@ -110,6 +115,7 @@ def main():
       except KeyboardInterrupt:
         capture.release()
         response = send_command(command_socket, "streamoff", TELLO_COMMAND_ADDRESS)
+        f.close()
         print("See you later! Bye!")
 
 main()
